@@ -17,7 +17,7 @@ struct Expression
 	{
 		for (len = 0; str[len] != '\0'; len++);
 	}
-	char* str; //¼ö½Ä µé¾î°¨
+	char* str; //Â¼Ã¶Â½Ã„ ÂµÃ©Â¾Ã®Â°Â¨
 	int pos;
 	int len;
 };
