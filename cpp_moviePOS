@@ -1,0 +1,735 @@
+#include <iostream>
+using namespace std;
+
+#include "Ticket.h"
+#include <string>
+#include <fstream>
+
+Ticket::Ticket()
+{
+	memcpy(arr1, ori, sizeof(ori)); memcpy(arr2, ori, sizeof(ori));
+	memcpy(arr3, ori, sizeof(ori)); memcpy(arr4, ori, sizeof(ori));
+	memcpy(arr5, ori, sizeof(ori)); memcpy(arr6, ori, sizeof(ori));
+	memcpy(arr7, ori, sizeof(ori)); memcpy(arr8, ori, sizeof(ori));
+	memcpy(arr9, ori, sizeof(ori)); memcpy(arr10, ori, sizeof(ori));
+	memcpy(arr11, ori, sizeof(ori)); memcpy(arr12, ori, sizeof(ori));
+}
+
+void Ticket::movie_name()
+{
+	while (true)
+	{
+		cout << "1. 귀멸의 칼날  2. 레 미제라블  3. 비와 당신의 이야기" << endl << "영화를 선택해주세요 ( 번호 입력 ) : ";
+		cin >> m_name;
+		if (m_name < 1 || m_name>3)
+		{
+			cout << '\n' << "잘못된 번호입니다. 다시 선택해주세요" << '\n' << endl;
+			continue;
+		}
+		else break;
+	}
+	cout << "\n";
+	while (true)
+	{
+		cout << " 1. 1관  2. 2관" << endl << "상영관을 선택해주세요 ( 번호 입력 ) : ";
+		cin >> theater;
+		if (theater < 1 || theater>2)
+		{
+			cout << '\n' << "잘못된 번호입니다. 다시 선택해주세요" << '\n' << endl;
+			continue;
+		}
+		else break;
+	}
+	cout << "\n";
+	while (true)
+	{
+		if (m_name == 1)
+		{
+			cout << "1. 8:00 ~ 10:00  2. 14:00 ~ 16:00" << endl << "상영시간을 선택해주세요 ( 번호 입력 ) : ";
+			cin >> time;
+			if (time < 1 || time > 2)
+			{
+				cout << '\n' << "잘못된 번호입니다. 다시 선택해주세요" << '\n' << endl;
+				continue;
+			}
+			else break;
+		}
+		else if (m_name == 2)
+		{
+			cout << "3. 10:00 ~ 12:00  4. 16:00 ~ 18:00" << endl << "상영시간을 선택해주세요 ( 번호 입력 ) : ";
+			cin >> time;
+			if (time < 3 || time > 4)
+			{
+				cout << '\n' << "잘못된 번호입니다. 다시 선택해주세요" << '\n' << endl;
+				continue;
+			}
+			else break;
+		}
+		else if (m_name == 3)
+		{
+			cout << "5. 12:00 ~ 14:00  6. 18:00 ~ 20:00" << endl << "상영시간을 선택해주세요 ( 번호 입력 ) : ";
+			cin >> time;
+			if (time < 5 || time > 6)
+			{
+				cout << '\n' << "잘못된 번호입니다. 다시 선택해주세요" << '\n' << endl;
+				continue;
+			}
+			else break;
+		}
+	}
+	cout << "\n";
+}
+
+void Ticket::open_seat_file(int m_name, int theater, int time, ifstream& f)
+{
+	if (m_name == 1 && theater == 1 && time == 1) f.open("n_arr1.txt");
+	else if (m_name == 1 && theater == 1 && time == 2) f.open("n_arr2.txt");
+	else if (m_name == 1 && theater == 2 && time == 1) f.open("n_arr3.txt");
+	else if (m_name == 1 && theater == 2 && time == 2) f.open("n_arr4.txt");
+	else if (m_name == 2 && theater == 1 && time == 3) f.open("n_arr5.txt");
+	else if (m_name == 2 && theater == 1 && time == 4) f.open("n_arr6.txt");
+	else if (m_name == 2 && theater == 2 && time == 3) f.open("n_arr7.txt");
+	else if (m_name == 2 && theater == 2 && time == 4) f.open("n_arr8.txt");
+	else if (m_name == 3 && theater == 1 && time == 5) f.open("n_arr9.txt");
+	else if (m_name == 3 && theater == 1 && time == 6) f.open("n_arr10.txt");
+	else if (m_name == 3 && theater == 2 && time == 5) f.open("n_arr11.txt");
+	else f.open("n_arr12.txt");
+
+	if (!f)
+	{
+		cout << "seat file open error" << endl;
+		return;
+	}
+}
+
+void Ticket::open_seat_file(int m_name, int theater, int time, ofstream& of)
+{
+	if (m_name == 1 && theater == 1 && time == 1) of.open("n_arr1.txt");
+	else if (m_name == 1 && theater == 1 && time == 2) of.open("n_arr2.txt");
+	else if (m_name == 1 && theater == 2 && time == 1) of.open("n_arr3.txt");
+	else if (m_name == 1 && theater == 2 && time == 2) of.open("n_arr4.txt");
+	else if (m_name == 2 && theater == 1 && time == 3) of.open("n_arr5.txt");
+	else if (m_name == 2 && theater == 1 && time == 4) of.open("n_arr6.txt");
+	else if (m_name == 2 && theater == 2 && time == 3) of.open("n_arr7.txt");
+	else if (m_name == 2 && theater == 2 && time == 4) of.open("n_arr8.txt");
+	else if (m_name == 3 && theater == 1 && time == 5) of.open("n_arr9.txt");
+	else if (m_name == 3 && theater == 1 && time == 6) of.open("n_arr10.txt");
+	else if (m_name == 3 && theater == 2 && time == 5) of.open("n_arr11.txt");
+	else of.open("n_arr12.txt");
+
+	if (!of)
+	{
+		cout << "seat file open error";
+		return;
+	}
+}
+
+void Ticket::open_gen_file(ifstream& f, int gender)
+{
+	if (gender == 1)
+	{
+		f.open("male.txt");
+	}
+	else if (gender == 2)
+	{
+		f.open("female.txt");
+	}
+	if (!f)
+	{
+		cout << "gender file open error";
+		return;
+	}
+}
+
+void Ticket::open_gen_file(ofstream& of, int gender)
+{
+	if (gender == 1)
+	{
+		of.open("male.txt");
+	}
+	else if (gender == 2)
+	{
+		of.open("female.txt");
+	}
+	if (!of)
+	{
+		cout << "gender file open error";
+		return;
+	}
+}
+
+void Ticket::read_file(ifstream& f, int arr[], int i, int j)
+{
+	int count = 0;
+	int tmp_i = 0, tmp_j = 0;
+	while (count < 32)
+	{
+		f >> arr[count];
+		if (count >= 0 && count <= 7) tmp_i = 0;
+		else if (count >= 8 && count <= 15) tmp_i = 1;
+		else if (count >= 16 && count <= 23) tmp_i = 2;
+		else tmp_i = 3;
+
+		if (tmp_i == i && tmp_j == j)
+		{
+			arr[count] += 1;
+		}
+
+		if (tmp_j == 7) tmp_j = -1;
+		tmp_j += 1;
+		count++;
+	}
+}
+
+void Ticket::write_file(ofstream& of, int arr[])
+{
+	int count = 0;
+	int line = 0;
+	while (count < 32)
+	{
+		of << arr[count];
+		if (line == 7)
+		{
+			of << endl;
+			line = -1;
+		}
+		else of << ' ';
+		line++;
+		count++;
+	}
+}
+
+int Ticket::change_seat(char myseat, int myseat_num, char (*arr)[8])
+{
+	int i, j;
+	switch (myseat)
+	{
+	case'A':
+		i = 3; break;
+	case'B':
+		i = 2; break;
+	case'C':
+		i = 1; break;
+	case'D':
+		i = 0; break;
+	}
+	j = myseat_num;
+	if (arr[i][j] == 'X')
+	{
+		cout << "이미 선택되었거나 사회적 거리두기로 앉지 못하는 좌석입니다. 다른 좌석을 선택해 주세요." << endl;
+		cout << '\n';
+	}
+	else
+	{
+		arr[i][j] = 'X';
+		if (i == 0)
+		{
+			if (j == 1) { arr[0][2] = 'X'; arr[1][1] = 'X'; }
+			else if (j == 7) { arr[0][6] = 'X'; arr[1][7] = 'X'; }
+			else { arr[i][j - 1] = 'X'; arr[i][j + 1] = 'X'; arr[i + 1][j] = 'X'; }
+		}
+		else if (i == 3)
+		{
+			if (j == 1) { arr[2][1] = 'X'; arr[3][2] = 'X'; }
+			else if (j == 7) { arr[2][7] = 'X'; arr[3][6] = 'X'; }
+			else { arr[i][j - 1] = 'X'; arr[i][j + 1] = 'X'; arr[i - 1][j] = 'X'; }
+		}
+		else if (j == 1) { arr[i - 1][j] = 'X'; arr[i + 1][j] = 'X'; arr[i][j + 1] = 'X'; }
+		else if (j == 7) { arr[i - 1][j] = 'X'; arr[i + 1][j] = 'X'; arr[i][j - 1] = 'X'; }
+		else { arr[i - 1][j] = 'X'; arr[i + 1][j] = 'X'; arr[i][j - 1] = 'X'; arr[i][j + 1] = 'X'; }
+		same_seat += 1;
+		arr2[i][j] += 1;
+		
+		ifstream gen;
+		int gen_arr[32];
+		open_gen_file(gen, gender);
+		read_file(gen, gen_arr, i, j);
+		gen.close();
+
+		ofstream rgen;
+		open_gen_file(rgen, gender);
+		write_file(rgen, gen_arr);
+		rgen.close();
+	}
+	cout << "<< 좌석 현황 >>" << endl;
+	for (int k = 0; k < 5; k++)
+	{
+		for (int u = 0; u < 8; u++)
+		{
+			cout << arr[k][u];
+			cout << ' ';
+		}
+		cout << '\n';
+	}
+	cout << "사회적 거리두기에 따라 예매 좌석의 앞/뒤/좌/우 좌석은 비워집니다" << endl;
+	cout << '\n';
+	save_i[id] = i;
+	save_j[id] = j;
+	id++;
+
+	ifstream plus;
+	int plus_arr[32];
+	open_seat_file(m_name, theater, time, plus);
+	read_file(plus, plus_arr, i, j);
+	plus.close();
+
+	ofstream rplus;
+	open_seat_file(m_name, theater, time, rplus);
+	write_file(rplus, plus_arr);
+	rplus.close();
+
+	return same_seat;
+}
+
+void Ticket::seat()
+{
+
+	cout << " [ 스 크 린 ]" << endl;
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			cout << ori[i][j];
+			cout << ' ';
+		}
+		cout << "\n";
+	}
+	while (true)
+	{
+		cout << "좌석을 선택해주세요 ( 입력 예시 : A1 ) : ";
+		cin >> myseat >> myseat_num;
+		if (!(myseat == 'A' || myseat == 'B' || myseat == 'C' || myseat == 'D'))
+		{
+			cout << '\n' << "잘못된 입력입니다. 다시 선택해주세요" << '\n' << '\n';
+			continue;
+		}
+		if (myseat_num < 1 || myseat_num>7)
+		{
+			cout << '\n' << "잘못된 입력입니다. 다시 선택해주세요" << '\n' << '\n';
+			continue;
+		}
+		while (true)
+		{
+			cout << "성별을 입력해주세요 -> 남자 : 1, 여자 : 2 ( 번호 입력 ) : ";
+			cin >> gender;
+			if (gender != 1 && gender != 2)
+			{
+				cout << '\n' << "잘못된 번호입니다. 다시 선택해주세요" << '\n';
+				continue;
+			}
+			else break;
+		}
+		cout << '\n';
+		if (m_name == 1 && theater == 1 && time == 1) change_seat(myseat, myseat_num, arr1);
+		else if (m_name == 1 && theater == 1 && time == 2) change_seat(myseat, myseat_num, arr2);
+		else if (m_name == 1 && theater == 2 && time == 1) change_seat(myseat, myseat_num, arr3);
+		else if (m_name == 1 && theater == 2 && time == 2) change_seat(myseat, myseat_num, arr4);
+		else if (m_name == 2 && theater == 1 && time == 3) change_seat(myseat, myseat_num, arr5);
+		else if (m_name == 2 && theater == 1 && time == 4) change_seat(myseat, myseat_num, arr6);
+		else if (m_name == 2 && theater == 2 && time == 3) change_seat(myseat, myseat_num, arr7);
+		else if (m_name == 2 && theater == 2 && time == 4) change_seat(myseat, myseat_num, arr8);
+		else if (m_name == 3 && theater == 1 && time == 5) change_seat(myseat, myseat_num, arr9);
+		else if (m_name == 3 && theater == 1 && time == 6) change_seat(myseat, myseat_num, arr10);
+		else if (m_name == 3 && theater == 2 && time == 5) change_seat(myseat, myseat_num, arr11);
+		else change_seat(myseat, myseat_num, arr12);
+		
+		if (same_seat == 1) 
+		{
+			same_seat = 0;
+			break;
+		}
+	}
+}
+
+void Ticket::payment(int ans, int idxx)
+{
+	int money;
+	int price = 10000;
+	if (ans == 1)
+	{
+		if (ppoint[idxx] >= 10000)
+		{
+			ppoint[idxx] = ppoint[idxx] - 10000;
+			price = 0;
+		}
+		else
+		{
+			price = 10000 - ppoint[idxx];
+			ppoint[idxx] = 0;
+		}
+	}
+	cout << "티켓 가격 : " << price << endl;
+	cout << "\n";
+	cout << "지불한 금액 : ";
+	cin >> money;
+	while (true)
+	{
+		cout << '\n';
+		if (money == price)
+		{
+			cout << "결제 완료" << endl;
+			cout << '\n';
+			break;
+		}
+		else if (money < price)
+		{
+			cout << price - money << "원이 부족합니다" << endl;
+			price = price - money;
+			cout << "지불한 금액 : ";
+			cin >> money;
+		}
+		else if (money > price)
+		{
+			cout << "거스름돈 : " << money - price << endl;
+			cout << "결제 완료" << endl;
+			cout << '\n';
+			break;
+		}
+	}
+	ticket_num[idxx] += 1;
+	cout << info[idxx] << "님은 이때까지 " << ticket_num[idxx] << "개의 티켓을 구매하셨습니다" << '\n';
+}
+
+void Ticket::point()
+{
+	cout << "이름과 생년월일을 입력해주세요 ( ex. 이민경010307 ( 공백 없이 입력 ) ) : ";
+	cin >> name_birth;
+
+	int cnt;
+	int cnt2 = 0;
+	
+	for (int i = 0; i < idx + 1; i++)
+	{
+		if (info[i]==name_birth)
+		{
+			cnt2 += 1;
+			cnt = i;
+			break;
+		}
+	}
+	int ans;
+	if (cnt2 == 1)
+	{
+		if (ppoint[cnt] == 0)
+		{
+			cout << "포인트가 0원 있습니다" << '\n' <<endl;
+			ans = 2;
+		}
+		else
+		{
+			cout << "포인트가 " << ppoint[cnt] << "원 있습니다" << endl << "사용하시겠습니까?" << endl;
+			cout << " 1. 사용  2. 미사용 ( 번호 입력 ) : ";
+			cin >> ans;
+
+			if (ans == 1)
+			{
+				cout << "원래 티켓 가격 : 10000" << endl;
+				cout << "할인된 ";
+			}
+		}
+		payment(ans, cnt);
+		ppoint[cnt] += 100;
+	}
+	else
+	{	
+		info[idx] = name_birth;
+		cout << "적립된 포인트가 없습니다" << endl;
+		payment(0, idx);
+		ppoint[idx] += 100;
+	}
+	cout << "100 포인트 적립되었습니다" << '\n' << '\n';
+	idx++;
+}
+
+void Cancel::read_cancelfile(ifstream& f, int arr[], int i, int j)
+{
+	int count = 0;
+	int tmp_i = 0, tmp_j = 0;
+	while (count < 32)
+	{
+		f >> arr[count];
+		if (count >= 0 && count <= 7) tmp_i = 0;
+		else if (count >= 8 && count <= 15) tmp_i = 1;
+		else if (count >= 16 && count <= 23) tmp_i = 2;
+		else tmp_i = 3;
+
+		if (tmp_i == i && tmp_j == j)
+		{
+			arr[count] -= 1;
+		}
+
+		if (tmp_j == 7) tmp_j = -1;
+		tmp_j += 1;
+		count++;
+	}
+}
+
+void Cancel::write_cancelfile(ofstream& of, int arr[])
+{
+	int count = 0;
+	int line = 0;
+	while (count < 32)
+	{
+		of << arr[count];
+		if (line == 7)
+		{
+			of << endl;
+			line = -1;
+		}
+		else of << ' ';
+		line++;
+		count++;
+	}
+}
+
+void Cancel::cancel_seat(char myseat, int myseat_num, char(*arr)[8])
+{
+	int i, j;
+	switch (myseat)
+	{
+	case'A':
+		i = 3; break;
+	case'B':
+		i = 2; break;
+	case'C':
+		i = 1; break;
+	case'D':
+		i = 0; break;
+	}
+	j = myseat_num;
+	arr[i][j] = 'O';
+	if (i == 0)
+	{
+		if (j == 1) { arr[0][2] = 'O'; arr[1][1] = 'O'; }
+		else if (j == 7) { arr[0][6] = 'O'; arr[1][7] = 'O'; }
+		else { arr[i][j - 1] = 'O'; arr[i][j + 1] = 'O'; arr[i + 1][j] = 'O'; }
+	}
+	else if (i == 3)
+	{
+		if (j == 1) { arr[2][1] = 'O'; arr[3][2] = 'O'; }
+		else if (j == 7) { arr[2][7] = 'O'; arr[3][6] = 'O'; }
+		else { arr[i][j - 1] = 'O'; arr[i][j + 1] = 'O'; arr[i - 1][j] = 'O'; }
+	}
+	else if (j == 1) { arr[i - 1][j] = 'O'; arr[i + 1][j] = 'O'; arr[i][j + 1] = 'O'; }
+	else if (j == 7) { arr[i - 1][j] = 'O'; arr[i + 1][j] = 'O'; arr[i][j - 1] = 'O'; }
+	else { arr[i - 1][j] = 'O'; arr[i + 1][j] = 'O'; arr[i][j - 1] = 'O'; arr[i][j + 1] = 'O'; }
+	arr2[i][j] -= 1;
+	cout << "좌석이 취소되었습니다" << endl;
+	cout << '\n';
+
+	for (int check = 0; check < id + 1; check++)
+	{
+		if (save_i[check] == i && save_j[check] == j)
+		{
+			save_i[check] = 0;
+			save_j[check] = 0;
+		}
+	}
+	for (int w = 0; w < id + 1; w++)
+	{
+		if (save_i[w] == 0 && save_j[w] == 0) continue;
+		else
+		{
+			if (save_i[w] == 0)
+			{
+				if (save_j[w] == 1) { arr[0][2] = 'X'; arr[1][1] = 'X'; }
+				else if (save_j[w] == 7) { arr[0][6] = 'X'; arr[1][7] = 'X'; }
+				else { arr[save_i[w]][save_j[w] - 1] = 'X'; arr[save_i[w]][save_j[w] + 1] = 'X'; arr[save_i[w] + 1][save_j[w]] = 'X'; }
+			}
+			else if (save_i[w] == 3)
+			{
+				if (save_j[w] == 1) { arr[2][1] = 'X'; arr[3][2] = 'X'; }
+				else if (save_j[w] == 7) { arr[2][7] = 'X'; arr[3][6] = 'X'; }
+				else { arr[save_i[w]][save_j[w] - 1] = 'X'; arr[save_i[w]][save_j[w] + 1] = 'X'; arr[save_i[w] - 1][save_j[w]] = 'X'; }
+			}
+			else if (j == 1) { arr[save_i[w] - 1][save_j[w]] = 'X'; arr[save_i[w] + 1][save_j[w]] = 'X'; arr[save_i[w]][save_j[w] + 1] = 'X'; }
+			else if (j == 7) { arr[save_i[w] - 1][save_j[w]] = 'X'; arr[save_i[w] + 1][save_j[w]] = 'X'; arr[save_i[w]][save_j[w] - 1] = 'X'; }
+			else { arr[save_i[w] - 1][save_j[w]] = 'X'; arr[save_i[w] + 1][save_j[w]] = 'X'; arr[save_i[w]][save_j[w] - 1] = 'X'; arr[save_i[w]][save_j[w] + 1] = 'X'; }
+		}
+	}
+
+	ifstream minus;
+	int minus_arr[32];
+	open_seat_file(m_name, theater, time, minus);
+	read_cancelfile(minus, minus_arr, i, j);
+	minus.close();
+
+	ofstream rminus;
+	open_seat_file(m_name, theater, time, rminus);
+	write_cancelfile(rminus, minus_arr);
+	rminus.close();
+
+	cout << "<< 좌석 현황 >>" << endl;
+	for (int k = 0; k < 5; k++)
+	{
+		for (int u = 0; u < 8; u++)
+		{
+			cout << arr[k][u];
+			cout << ' ';
+		}
+		cout << '\n';
+	}
+	cout << '\n';
+
+	while (true)
+	{
+		cout << "성별을 입력해주세요 -> 남자 : 1, 여자 : 2 ( 번호 입력 ) : ";
+		cin >> gender;
+		if (gender != 1 && gender != 2)
+		{
+			cout << '\n' << "잘못된 번호입니다. 다시 선택해주세요" << '\n';
+			continue;
+		}
+		else break;
+	}
+	ifstream gen2;
+	int gen2_arr[32];
+	open_gen_file(gen2, gender);
+	read_cancelfile(gen2, gen2_arr, i, j);
+	gen2.close();
+
+	ofstream rgen2;
+	open_gen_file(rgen2, gender);
+	write_cancelfile(rgen2, gen2_arr);
+	rgen2.close();
+}
+
+void Cancel::cancelticket()
+{
+
+	while (true)
+	{
+		cout << "1. 귀멸의 칼날  2. 레 미제라블  3. 비와 당신의 이야기" << endl << "예매했던 영화를 선택해주세요 ( 번호 입력 ) : ";
+		cin >> m_name;
+		if (m_name < 1 || m_name>3)
+		{
+			cout << '\n' << "잘못된 번호입니다. 다시 선택해주세요" << '\n' << endl;
+			continue;
+		}
+		else break;
+	}
+	cout << "\n";
+	while (true)
+	{
+		cout << " 1. 1관  2. 2관" << endl << "예매했던 상영관을 선택해주세요 ( 번호 입력 ) : ";
+		cin >> theater;
+		if (theater < 1 || theater>2)
+		{
+			cout << '\n' << "잘못된 번호입니다. 다시 선택해주세요" << '\n' << endl;
+			continue;
+		}
+		else break;
+	}
+	cout << "\n";
+	while (true)
+	{
+		if (m_name == 1)
+		{
+			cout << "1. 8:00 ~ 10:00  2. 14:00 ~ 16:00" << endl << "예매했던 상영시간을 선택해주세요 ( 번호 입력 ) : ";
+			cin >> time;
+			if (time < 1 || time > 2)
+			{
+				cout << '\n' << "잘못된 번호입니다. 다시 선택해주세요" << '\n' << endl;
+				continue;
+			}
+			else break;
+		}
+		else if (m_name == 2)
+		{
+			cout << "3. 10:00 ~ 12:00  4. 16:00 ~ 18:00" << endl << "예매했던 상영시간을 선택해주세요 ( 번호 입력 ) : ";
+			cin >> time;
+			if (time < 3 || time > 4)
+			{
+				cout << '\n' << "잘못된 번호입니다. 다시 선택해주세요" << '\n' << endl;
+				continue;
+			}
+			else break;
+		}
+		else if (m_name == 3)
+		{
+			cout << "5. 12:00 ~ 14:00  6. 18:00 ~ 20:00" << endl << "예매했던 상영시간을 선택해주세요 ( 번호 입력 ) : ";
+			cin >> time;
+			if (time < 5 || time > 6)
+			{
+				cout << '\n' << "잘못된 번호입니다. 다시 선택해주세요" << '\n' << endl;
+				continue;
+			}
+			else break;
+		}
+	}
+	cout << "\n";
+
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			cout << ori[i][j];
+			cout << ' ';
+		}
+		cout << "\n";
+	}
+	while (true)
+	{
+		cout << "예매했던 좌석번호를 입력해주세요 ( ex. Al ) : ";
+		cin >> myseat >> myseat_num;
+		if ((myseat != 'A' && myseat != 'B' && myseat != 'C' && myseat != 'D')||(myseat_num<1||myseat_num>7))
+		{
+			cout << '\n' << "잘못된 입력입니다. 다시 입력해주세요" << '\n';
+			continue;
+		}
+		else break;
+	}
+	cout << '\n';
+	
+	if (m_name == 1 && theater == 1 && time == 1) cancel_seat(myseat, myseat_num, arr1);
+	else if (m_name == 1 && theater == 1 && time == 2) cancel_seat(myseat, myseat_num, arr2);
+	else if (m_name == 1 && theater == 2 && time == 1) cancel_seat(myseat, myseat_num, arr3);
+	else if (m_name == 1 && theater == 2 && time == 2) cancel_seat(myseat, myseat_num, arr4);
+	else if (m_name == 2 && theater == 1 && time == 3) cancel_seat(myseat, myseat_num, arr5);
+	else if (m_name == 2 && theater == 1 && time == 4) cancel_seat(myseat, myseat_num, arr6);
+	else if (m_name == 2 && theater == 2 && time == 3) cancel_seat(myseat, myseat_num, arr7);
+	else if (m_name == 2 && theater == 2 && time == 4) cancel_seat(myseat, myseat_num, arr8);
+	else if (m_name == 3 && theater == 1 && time == 5) cancel_seat(myseat, myseat_num, arr9);
+	else if (m_name == 3 && theater == 1 && time == 6) cancel_seat(myseat, myseat_num, arr10);
+	else if (m_name == 3 && theater == 2 && time == 5) cancel_seat(myseat, myseat_num, arr11);
+	else cancel_seat(myseat, myseat_num, arr12);
+
+	int out = 0;
+	while (out == 0)
+	{
+		cout << "이름과 생년월일을 입력해주세요 ( ex. 이민경010307 ( 공백 없이 입력 ) ) : ";
+		cin >> name_birth;
+		int howmuch;
+		for (int i = 0; i < idx + 1; i++)
+		{
+			if (name_birth == info[i])
+			{
+				cout << "지불했던 금액 : ";
+				cin >> howmuch;
+				cout << howmuch << "원 환불되었습니다" << endl;
+				ppoint[i] -= 100;
+				ticket_num[i] -= 1;
+				cout << name_birth << "님은 이때까지 " << ticket_num[i] << "개의 티켓을 구매햐셨습니다" << endl;
+				cout << "100 포인트 적립이 취소되었습니다" << endl;
+				cout << "현재 포인트 : " << ppoint[i] << endl;
+				out += 1;
+				break;
+			}
+			if (i == idx && name_birth != info[i])
+			{
+				cout << '\n' << "저장된 이름이 없습니다. 다시 입력해주세요" << '\n';
+				break;
+			}
+		}
+	}
+	cout << '\n';
+}
+
+Ticket::~Ticket()
+{
+	delete[] info;
+	delete[] ticket_num;
+	delete[] ppoint;
+	delete[] save_i;
+	delete[] save_j;
+};
