@@ -1,0 +1,8 @@
+#include "Game.h"
+
+int main()
+{
+	WordGame game, * pgame;
+	pgame = &game;
+	pgame->run();
+}
