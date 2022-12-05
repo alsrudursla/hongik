@@ -1,0 +1,45 @@
+#include "Game.h"
+#include <iostream>
+using namespace std;
+#include <string>
+
+void WordGame::start()
+{
+	string first = "지";
+	int cnt = 0;
+	string myword;
+	while (true)
+	{
+		cout << p[cnt].myname() << "<<";
+		cin >> myword;
+		if (first.at(first.length() - 2) == myword.at(0) && first.at(first.length() - 1) == myword.at(1))
+		{
+			first = myword;
+			cnt++;
+			if (cnt == total) cnt = 0;
+			continue;
+		}
+		else
+		{
+			cout << "단어의 끝말이 이어지지 않습니다" << endl << p[cnt].myname() << "님은 탈락하셨습니다" << endl;
+			break;
+		}
+
+	}
+}
+
+void WordGame::run()
+{
+	cout << "끝말 잇기 게임을 시작합니다" << endl;
+	cout << "게임에 참가하는 인원은 몇명입니까? > ";
+	cin >> total;
+	p = new Player[total];
+	for (int i = 0; i < total; i++)
+	{
+		cout << "참가자의 이름을 입력하세요. 빈칸 없이>>";
+		cin >> yourname;
+		p[i].savename(yourname);
+	}
+	cout << "시작하는 단어는 아버지입니다" << endl;
+	start();
+}
