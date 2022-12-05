@@ -71,18 +71,18 @@ void SkipBlanks(Expression& e)
 		e.pos++;
 }
 bool TwoCharOp(Expression& e, Token& tok)
-{ //7°¡Áö µÎ±ÛÀÚ ÅäÅ«µé // <= >= == != && || -uÀ» Ã³¸®
+{ //7ê°€ì§€ ë‘ê¸€ì í† í°ë“¤ // <= >= == != && || -uì„ ì²˜ë¦¬
 	char c = e.str[e.pos]; char c2 = e.str[e.pos + 1];
 	int op; // LE GE EQ NE AND OR UMINUS
 	if (c == '<' && c2 == '=') op = LE;
-	else if (c == '>' && c2 == '=') op = GE;  // ÄÚµåÀÔ·Â: °¢ µÎ ±ÛÀÚ ÅäÅ«¿¡ ´ëÇØ ¾Ë¸ÂÀº type°ª op¿¡ ÀúÀå
+	else if (c == '>' && c2 == '=') op = GE;  // ì½”ë“œì…ë ¥: ê° ë‘ ê¸€ì í† í°ì— ëŒ€í•´ ì•Œë§ì€ typeê°’ opì— ì €ì¥
 	else if (c == '=' && c2 == '=') op = EQ;
 	else if (c == '!' && c2 == '=') op = NE;
 	else if (c == '&' && c2 == '&') op = AND;
 	else if (c == '|' && c2 == '|') op = OR;
 	else if (c == '-' && c2 == 'u') op = UMINUS;
 	else
-		return false; // ¸Â´Â µÎ ±ÛÀÚ ÅäÅ«ÀÌ ¾Æ´Ï¸é false¸¦ returnÇÑ´Ù.
+		return false; // ë§ëŠ” ë‘ ê¸€ì í† í°ì´ ì•„ë‹ˆë©´ falseë¥¼ returní•œë‹¤.
 	tok = Token(c, c2, op); e.pos += 2;
 	return true;
 }
@@ -98,7 +98,7 @@ bool OneCharOp(Expression& e, Token& tok)
 }
 Token NextToken(Expression& e, bool INFIX = true)
 {
-	static bool oprrFound = true; // Á¾Àü¿¡ ¿¬»êÀÚ ¹ß°ßµÇ¾ú´Ù°í °¡Á¤.
+	static bool oprrFound = true; // ì¢…ì „ì— ì—°ì‚°ì ë°œê²¬ë˜ì—ˆë‹¤ê³  ê°€ì •.
 	Token tok;
 	SkipBlanks(e); // skip blanks if any
 	if (e.pos == e.len) // No more token left in this expression
@@ -110,17 +110,17 @@ Token NextToken(Expression& e, bool INFIX = true)
 		if (INFIX) oprrFound = false; return tok;
 	}
 	if (TwoCharOp(e, tok) || OneCharOp(e, tok)) {
-		if (tok.type == '-' && INFIX && oprrFound) // operator ÈÄ -¹ß°ß
-			tok = Token('-', 'u', UMINUS); // unary minus(-u)·Î ¹Ù²Ù½Ã¿À
+		if (tok.type == '-' && INFIX && oprrFound) // operator í›„ -ë°œê²¬
+			tok = Token('-', 'u', UMINUS); // unary minus(-u)ë¡œ ë°”ê¾¸ì‹œì˜¤
 		if (INFIX) oprrFound = true; return tok;
 	}
 	throw "Illegal Character Found";
 }
 int icp(Token& t) { // in-coming priority
 	int ty = t.type;
-	/* ty°¡ '('¸é 0, UMINUS³ª '!'¸é 1,
-	 '*'³ª '/'³ª '%'¸é 2, ¡®+¡¯³ª '-'¸é 3,'<'³ª '>'³ª LE³ª GE¸é 4,
-	 EQ³ª NE¸é 5, AND¸é 6, ORÀÌ¸é 7,'='ÀÌ¸é 8, '#'¸é 9¸¦ returnÇÑ´Ù.*/
+	/* tyê°€ '('ë©´ 0, UMINUSë‚˜ '!'ë©´ 1,
+	 '*'ë‚˜ '/'ë‚˜ '%'ë©´ 2, â€˜+â€™ë‚˜ '-'ë©´ 3,'<'ë‚˜ '>'ë‚˜ LEë‚˜ GEë©´ 4,
+	 EQë‚˜ NEë©´ 5, ANDë©´ 6, ORì´ë©´ 7,'='ì´ë©´ 8, '#'ë©´ 9ë¥¼ returní•œë‹¤.*/
 	switch (ty)
 	{
 	case'(': return 0; break;
@@ -145,7 +145,7 @@ int icp(Token& t) { // in-coming priority
 }
 int isp(Token& t) {
 	//in-stack priority
-   //ÄÚµå ÀÔ·Â
+   //ì½”ë“œ ì…ë ¥
 	int ty = t.type;
 	switch (ty)
 	{
@@ -170,18 +170,18 @@ int isp(Token& t) {
 	}
 }
 void Postfix(Expression e) {
-	// STL stackÀÌ¿ëÇÏ°í, ±³ÀçÀÇ ¸¶Áö¸· for¹®À» ´ÙÀ½ °°ÀÌ ¹Ù²Û´Ù */
+	// STL stackì´ìš©í•˜ê³ , êµì¬ì˜ ë§ˆì§€ë§‰ forë¬¸ì„ ë‹¤ìŒ ê°™ì´ ë°”ê¾¼ë‹¤ */
 	// while (stack.top()!='#') { cout << stack.top(); stack.pop(); }
 	// stack.pop();
-	stack<Token> stack; // ½ºÅÃÀÇ ÃÊ±âÈ­
+	stack<Token> stack; // ìŠ¤íƒì˜ ì´ˆê¸°í™”
 	stack.push('#');
 	for (Token x = NextToken(e); x != '#'; x = NextToken(e))
 		if (x.IsOperand()) cout << x;
 		else if (x == ')')
-		{// unstack until ¡®(¡®
+		{// unstack until â€˜(â€˜
 			for (; stack.top() != '('; stack.pop())
 			cout << stack.top();
-			stack.pop(); // unstack ¡®(¡®
+			stack.pop(); // unstack â€˜(â€˜
 		}
 		else { // x is an operator
 				for (; isp(stack.top()) <= icp(x); stack.pop()) {
